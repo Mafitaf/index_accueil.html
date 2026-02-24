@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr" class="theme-dark">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Projets — Goffin Kenny</title>
+	<link rel="stylesheet" href="styles1.css" />
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+	<header>
+		<h1>Kenny GOFFIN</h1>
+		<p>Étudiant en BUT MMI</p>
+
+		<label class="switch">
+			<input type="checkbox" id="themeToggle" aria-label="Activer le thème sombre">
+			<span>🌙</span>
+		</label>
+
+		<button id="burger" class="btn" aria-expanded="false" aria-controls="nav">
+			<span class="sr-only">Ouvrir le menu</span> ☰
+		</button>
+
+		<nav id="nav" aria-label="Navigation principale">
+			<ul>
+				<li><a href="index_accueil.html">Accueil</a></li>
+				<li><a href="index_projets.html" class="actif" aria-current="page">Projets</a></li>
+				<li><a href="index_contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="contenu">
+		<section aria-labelledby="titre-projets">
+			<h2 id="titre-projets">Projets</h2>
+
+			<fieldset class="filtres" id="filtres" aria-label="Filtrer les projets par taille">
+				<legend>Filtrer par :</legend>
+				<label class="filtre-label">
+					<input type="radio" name="tag" value="all" checked>
+					<span>Tous</span>
+				</label>
+				<label class="filtre-label">
+					<input type="radio" name="tag" value="ui">
+					<span>Petit</span>
+				</label>
+				<label class="filtre-label">
+					<input type="radio" name="tag" value="code">
+					<span>Grand</span>
+				</label>
+			</fieldset>
+
+			<p id="filtre-count" role="status" aria-live="polite" class="filtre-count"></p>
+
+			<div class="grille-projets" id="grid">
+				<article class="carte" data-tag="ui">
+					<img src="images/image_de_personne.jpeg" alt="Miniature d'un site vitrine" />
+					<h3>Project 1</h3>
+					<p>je ne sais pas.</p>
+					<p class="meta">Petit • 2025</p>
+					<a class="btn" href="#">Voir</a>
+				</article>
+
+				<article class="carte" data-tag="code">
+					<img src="images/image_de_plein_de_personne.jpeg" alt="Éditeur de code avec HTML/CSS" />
+					<h3>Project 2</h3>
+					<p>La non plus.</p>
+					<p class="meta">Grand • 2025</p>
+					<a class="btn" href="#">Voir</a>
+				</article>
+
+				<article class="carte" data-tag="code">
+					<img src="images/image_de_plein_de_personne.jpeg" alt="Éditeur de code avec HTML/CSS" />
+					<h3>Project 3</h3>
+					<p>Toujours pas.</p>
+					<p class="meta">Grand • 2025</p>
+					<a class="btn" href="#">Voir</a>
+				</article>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<small>© <span id="annee"></span> Kenny GOFFIN — BUT MMI</small>
+	</footer>
+
+	<script>
+	(function() {
+		const filtres = document.getElementById('filtres');
+		const grid = document.getElementById('grid');
+		const count = document.getElementById('filtre-count');
+
+		function updateCount() {
+			if (!grid || !count) return;
+			const visible = grid.querySelectorAll('.carte:not([hidden])').length;
+			const total = grid.querySelectorAll('.carte').length;
+			count.textContent = visible === total
+				? total + ' projet' + (total > 1 ? 's' : '')
+				: visible + ' projet' + (visible > 1 ? 's' : '') + ' sur ' + total;
+		}
+
+		function applyFilter(tag) {
+			if (!grid) return;
+			grid.querySelectorAll('.carte').forEach(function(carte) {
+				if (tag === 'all' || carte.dataset.tag === tag) {
+					carte.removeAttribute('hidden');
+				} else {
+					carte.setAttribute('hidden', '');
+				}
+			});
+			updateCount();
+		}
+
+		if (filtres) {
+			filtres.addEventListener('change', function(e) {
+				if (e.target.name === 'tag') applyFilter(e.target.value);
+			});
+		}
+
+		updateCount();
+	})();
+	</script>
+</body>
+</html>

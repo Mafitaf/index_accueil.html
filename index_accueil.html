@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" class="theme-dark">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Carte de visite — Goffin Kenny</title>
+	<link rel="stylesheet" href="styles1.css" />
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+	<header>
+		<h1>Kenny GOFFIN</h1>
+		<p>Étudiant en BUT MMI</p>
+
+		<label class="switch">
+			<input type="checkbox" id="themeToggle" aria-label="Activer le thème sombre">
+			<span>🌙</span>
+		</label>
+
+		<button id="burger" class="btn" aria-expanded="false" aria-controls="nav">
+			<span class="sr-only">Ouvrir le menu</span> ☰
+		</button>
+
+		<nav id="nav" aria-label="Navigation principale">
+			<ul>
+				<li><a href="index_accueil.html" class="actif" aria-current="page">Accueil</a></li>
+				<li><a href="index_projets.html">Projets</a></li>
+				<li><a href="index_contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="contenu">
+		<section id="apropos" aria-labelledby="titre-apropos">
+			<h2 id="titre-apropos">À propos</h2>
+			<figure>
+				<img src="images/photo1.jpg" alt="Portrait de Kenny GOFFIN" width="140" height="140" />
+			</figure>
+			<p>Je suis rigoureux, curieux et créatif. J'aime les jeux vidéos (difficile, compétitif, coop, avec une bonne histoire), regarder des vidéos et les sports de combat. J'utilise CapCut et Canva régulièrement. Mon objectif professionnel est encore flou, honnêtement.</p>
+		</section>
+
+		<section id="competences" aria-labelledby="titre-competences">
+			<h2 id="titre-competences">Compétences</h2>
+			<ul>
+				<li>HTML/CSS (débutant)</li>
+				<li>Design (Canva)</li>
+				<li>Montage (Premiere / CapCut)</li>
+				<li>Programmation (Python)</li>
+			</ul>
+		</section>
+
+		<section id="liens" aria-labelledby="titre-liens">
+			<h2 id="titre-liens">Me retrouver</h2>
+			<address aria-label="Coordonnées de Kenny GOFFIN">
+				<p>Email : <a href="mailto:goffin.kenny.pro@gmail.com">goffin.kenny.pro@gmail.com</a></p>
+				<p>Réseaux : <a href="#" rel="me">LinkedIn</a>, <a href="#" rel="me">Instagram</a></p>
+			</address>
+		</section>
+	</main>
+
+	<footer>
+		<small>© <span id="annee"></span> Kenny GOFFIN — BUT MMI</small>
+	</footer>
+</body>
+</html>

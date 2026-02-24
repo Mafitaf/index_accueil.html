@@ -1,0 +1,20 @@
+[
+  {
+    "titre": "Site vitrine minimal",
+    "tag": "ui",
+    "img": "images/image_de_personne.jpeg",
+    "desc": "Grille asymétrique & typo fluide."
+  },
+  {
+    "titre": "Composants responsives",
+    "tag": "code",
+    "img": "images/image_de_plein_de_personne.jpeg",
+    "desc": "Container queries pour cartes."
+  },
+  {
+    "titre": "Portfolio Grid",
+    "tag": "ui",
+    "img": "images/image_de_personne.jpeg",
+    "desc": "Auto-fit + minmax + masonry."
+  }
+]

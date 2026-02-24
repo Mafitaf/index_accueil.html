@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Contact — Goffin Kenny</title>
+	<link rel="stylesheet" href="styles1.css" />
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<a class="skip-link" href="#contenu-contact">Aller au contenu principal</a>
+
+	<header>
+		<h1>Kenny GOFFIN</h1>
+		<p>Étudiant en BUT MMI</p>
+
+		<label class="switch">
+			<input type="checkbox" id="themeToggle" aria-label="Activer le thème sombre">
+			<span>🌙</span>
+		</label>
+
+		<button id="burger" class="btn" aria-expanded="false" aria-controls="nav">
+			<span class="sr-only">Ouvrir le menu</span> ☰
+		</button>
+
+		<nav id="nav" aria-label="Navigation principale">
+			<ul>
+				<li><a href="index_accueil.html">Accueil</a></li>
+				<li><a href="index_projets.html">Projets</a></li>
+				<li><a href="index_contact.html" class="actif" aria-current="page">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="contenu-contact">
+		<nav class="breadcrumb" aria-label="Fil d'Ariane">
+			<ol>
+				<li><a href="index.html">Accueil</a></li>
+				<li aria-current="page">Contact</li>
+			</ol>
+		</nav>
+
+		<section aria-labelledby="t-contact">
+			<h2 id="t-contact">Me contacter</h2>
+
+			<div id="form-success" class="form-success" role="alert" hidden>
+				✅ <strong>Message envoyé !</strong> Merci, je vous répondrai dès que possible.
+			</div>
+
+			<form id="contact-form" class="carte" action="contact.php" method="post" novalidate
+				  aria-describedby="form-instructions">
+
+				<p id="form-instructions" class="required-note">
+					Les champs marqués d'un <span aria-hidden="true" style="color:#c1121f">*</span>
+					<span class="sr-only">astérisque</span> sont obligatoires.
+				</p>
+
+				<!-- Champ Nom -->
+				<label for="nom">
+					Nom <span aria-hidden="true" class="required">*</span>
+				</label>
+				<span class="form-hint" id="hint-nom">Votre prénom et nom de famille.</span>
+				<input id="nom" name="nom" type="text" required
+					   autocomplete="name"
+					   aria-required="true"
+					   aria-invalid="false"
+					   aria-describedby="hint-nom error-nom"
+					   placeholder="Ex : Marie Dupont">
+				<span id="error-nom" class="form-error" aria-live="polite" hidden></span>
+
+				<!-- Champ Email -->
+				<label for="email">
+					Adresse email <span aria-hidden="true" class="required">*</span>
+				</label>
+				<span class="form-hint" id="hint-email">Format attendu : exemple@domaine.fr</span>
+				<input id="email" name="email" type="email" required
+					   autocomplete="email"
+					   aria-required="true"
+					   aria-invalid="false"
+					   aria-describedby="hint-email error-email"
+					   placeholder="exemple@domaine.fr">
+				<span id="error-email" class="form-error" aria-live="polite" hidden></span>
+
+				<!-- Champ Message -->
+				<label for="message">
+					Message <span aria-hidden="true" class="required">*</span>
+				</label>
+				<span class="form-hint" id="hint-message">10 caractères minimum, 280 maximum.</span>
+				<textarea id="message" name="message" rows="5" maxlength="280" required
+						  aria-required="true"
+						  aria-invalid="false"
+						  aria-describedby="hint-message restant-desc error-message"
+						  placeholder="Écrivez votre message ici…"></textarea>
+				<p id="restant-desc" style="margin:.25rem 0 .5rem;color:var(--muted);font-size:.825rem">
+					Caractères restants : <span id="restant" aria-live="polite" aria-atomic="true">280</span>
+				</p>
+				<span id="error-message" class="form-error" aria-live="polite" hidden></span>
+
+				<button class="btn" type="submit">Envoyer le message</button>
+			</form>
+		</section>
+	</main>
+
+	<footer>
+		<small>© <span id="annee"></span> Goffin Kenny — BUT MMI</small>
+	</footer>
+
+	<script>
+	(function() {
+		const form = document.getElementById('contact-form');
+		if (!form) return;
+
+		// Règles de validation par champ
+		const rules = {
+			nom: function(val) {
+				if (!val.trim()) return 'Le nom est requis.';
+				if (val.trim().length < 2) return 'Le nom doit faire au moins 2 caractères.';
+				return null;
+			},
+			email: function(val) {
+				if (!val.trim()) return "L'adresse email est requise.";
+				if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return 'Adresse email invalide. Ex : nom@domaine.fr';
+				return null;
+			},
+			message: function(val) {
+				if (!val.trim()) return 'Le message est requis.';
+				if (val.trim().length < 10) return 'Le message doit faire au moins 10 caractères (' + val.trim().length + '/10).';
+				return null;
+			}
+		};
+
+		function showError(fieldId, msg) {
+			const field = document.getElementById(fieldId);
+			const err = document.getElementById('error-' + fieldId);
+			if (!field || !err) return;
+			field.setAttribute('aria-invalid', 'true');
+			err.textContent = msg;
+			err.removeAttribute('hidden');
+		}
+
+		function clearError(fieldId) {
+			const field = document.getElementById(fieldId);
+			const err = document.getElementById('error-' + fieldId);
+			if (!field || !err) return;
+			field.setAttribute('aria-invalid', 'false');
+			err.textContent = '';
+			err.setAttribute('hidden', '');
+		}
+
+		function validateField(id) {
+			const el = document.getElementById(id);
+			if (!el || !rules[id]) return true;
+			const errMsg = rules[id](el.value);
+			if (errMsg) { showError(id, errMsg); return false; }
+			clearError(id); return true;
+		}
+
+		// Validation au blur (quand on quitte le champ)
+		['nom', 'email', 'message'].forEach(function(id) {
+			const el = document.getElementById(id);
+			if (!el) return;
+
+			// Valider quand on quitte le champ
+			el.addEventListener('blur', function() {
+				validateField(id);
+			});
+
+			// Corriger l'erreur en temps réel dès que c'est bon
+			el.addEventListener('input', function() {
+				if (el.getAttribute('aria-invalid') === 'true') {
+					validateField(id);
+				}
+			});
+		});
+
+		// Validation à la soumission
+		form.addEventListener('submit', function(e) {
+			const results = ['nom', 'email', 'message'].map(validateField);
+			if (results.includes(false)) {
+				e.preventDefault();
+				// Focus sur le premier champ en erreur
+				const firstInvalid = form.querySelector('[aria-invalid="true"]');
+				if (firstInvalid) firstInvalid.focus();
+			}
+		});
+	})();
+	</script>
+</body>
+</html>
